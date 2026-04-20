@@ -98,7 +98,7 @@
         <div class="login-container">
             <h1>Welcome Back</h1>
             <p style="margin-bottom: 2rem; color: #8d6e63;">Login to your sweet account</p>
-            <form>
+            <form id="loginForm">
                 <div class="form-group">
                     <label for="email">Sweet Email</label>
                     <input type="email" id="email" placeholder="yourname@email.com" required>
@@ -107,7 +107,8 @@
                     <label for="password">Password</label>
                     <input type="password" id="password" placeholder="••••••••" required>
                 </div>
-                <button type="button" class="login-btn" onclick="alert('Login functionality coming soon!')">Sign In with Love</button>
+                <div id="error-message" style="color: #ff5c8d; margin-bottom: 1rem; font-weight: 600; display: none;"></div>
+                <button type="submit" class="login-btn">Sign In with Love</button>
             </form>
             <div class="login-links">
                 <p><a href="#">Forgot your password?</a></p>
@@ -128,6 +129,28 @@
             const badges = document.querySelectorAll('.cart-count');
             badges.forEach(badge => badge.innerText = totalQty);
         }
+
+        const loginForm = document.getElementById('loginForm');
+        const errorMessage = document.getElementById('error-message');
+
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            // Simple login logic for demo: Allow any @gmail.com account
+            if (email.endsWith('@gmail.com')) {
+                localStorage.setItem('divineUser', JSON.stringify({ email: email }));
+                window.location.href = 'orders.html';
+            } else {
+                errorMessage.textContent = 'Please use a valid @gmail.com address to sign in with love!';
+                errorMessage.style.display = 'block';
+                setTimeout(() => {
+                    errorMessage.style.display = 'none';
+                }, 3000);
+            }
+        });
+
         document.addEventListener('DOMContentLoaded', updateCartBadge);
     </script>
 </body>
